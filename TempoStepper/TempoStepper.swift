@@ -60,6 +60,10 @@ private enum TempoStepperState {
   @IBInspectable public var increaseButtonText: String = "+"
   /// Decrease button text. Defaults "-".
   @IBInspectable public var decreaseButtonText: String = "-"
+  /// Optional increase button text. Defaults nil.
+  @IBInspectable public var increaseButtonImage: UIImage?
+  /// Optional decrease button text. Defaults nil.
+  @IBInspectable public var decreaseButtonImage: UIImage?
 
   /// Current state of stepper.
   private var stepperState: TempoStepperState = .normal
@@ -135,10 +139,12 @@ private enum TempoStepperState {
     // Increase button
     increaseButton.setTitle(increaseButtonText, for: .normal)
     increaseButton.setTitleColor(stepperButtonTextColor, for: .normal)
+    increaseButton.setImage(increaseButtonImage, for: .normal)
     increaseButton.titleLabel?.font = stepperButtonFont
     // Decrease button
     decreaseButton.setTitle(decreaseButtonText, for: .normal)
     decreaseButton.setTitleColor(stepperButtonTextColor, for: .normal)
+    decreaseButton.setImage(decreaseButtonImage, for: .normal)
     decreaseButton.titleLabel?.font = stepperButtonFont
   }
 
