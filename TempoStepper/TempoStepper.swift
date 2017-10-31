@@ -100,7 +100,7 @@ private enum TempoStepperState {
     stepperContainerStackView.fill(to: self)
     // Text field
     stepperContainerStackView.addArrangedSubview(valueTextField)
-    valueTextField.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+    valueTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
     valueTextField.borderStyle = .none
     valueTextField.delegate = self
     valueTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -111,7 +111,7 @@ private enum TempoStepperState {
     stepperButtonsStackView.alignment = .center
     stepperButtonsStackView.axis = .vertical
     stepperButtonsStackView.spacing = 0
-    stepperButtonsStackView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+    stepperButtonsStackView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     stepperButtonsStackView.addArrangedSubview(increaseButton)
     stepperButtonsStackView.addArrangedSubview(decreaseButton)
     // Increase button
