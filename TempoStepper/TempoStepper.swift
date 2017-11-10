@@ -10,7 +10,7 @@ import UIKit
 import ALKit
 
 /// Holds `TempoStepper`'s stepping state.
-private enum TempoStepperState {
+public enum TempoStepperState {
   /// Normal state. Nor increasing either decreasing.
   case normal
   /// Either with tap or by auto stepping, stepper increasing.
@@ -66,7 +66,7 @@ private enum TempoStepperState {
   @IBInspectable public var decreaseButtonImage: UIImage? { didSet{ setNeedsLayout() }}
 
   /// Current state of stepper.
-  private var stepperState: TempoStepperState = .normal
+  public private(set) var stepperState: TempoStepperState = .normal { didSet{ onStateChange?(self) }}
   /// Timer that control auto stepping.
   private var stepperTimer: Timer?
   /// Timer start date reference to update default/fast speed by `fastAutoSteppingInterval`.
@@ -82,6 +82,15 @@ private enum TempoStepperState {
   /// Decreases stepper's `value` on each tap or auto stepping mode, `stepValue` amount.
   public private(set) var decreaseButton = UIButton(type: .system)
 
+  /// Optional callback function on touches began.
+  public var onTouchesBegan: ((TempoStepper) -> Void)?
+  /// Optional callback function on touches moved.
+  public var onTouchesMoved: ((TempoStepper) -> Void)?
+  /// Optional callback function on touches ended.
+  public var onTouchesEnded: ((TempoStepper) -> Void)?
+  /// Optional callback function on state changes.
+  public var onStateChange: ((TempoStepper) -> Void)?
+
   // MARK: Init
 
   public override init(frame: CGRect) {
@@ -95,6 +104,7 @@ private enum TempoStepperState {
   }
 
   private func commonInit() {
+    isExclusiveTouch = true
     // Container
     stepperContainerStackView.axis = .horizontal
     stepperContainerStackView.alignment = .center
@@ -159,6 +169,7 @@ private enum TempoStepperState {
     super.touchesBegan(touches, with: event)
     guard let touch = touches.first, touches.count == 1 else { invalidateTimer(); return }
     let position = touch.location(in: nil)
+    onTouchesBegan?(self)
     // Start stepping timer if user touched a step button.
     if increaseButton.convert(increaseButton.frame, to: nil).contains(position) {
       stepperState = .increasing
@@ -184,6 +195,7 @@ private enum TempoStepperState {
     super.touchesMoved(touches, with: event)
     guard let touch = touches.first, touches.count == 1 else { invalidateTimer(); return }
     let position = touch.location(in: nil)
+    onTouchesMoved?(self)
 
     // Check if stepper changed
     if increaseButton.convert(increaseButton.frame, to: nil).contains(position) {
@@ -204,7 +216,8 @@ private enum TempoStepperState {
   public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     super.touchesEnded(touches, with: event)
     guard let startDate = stepperTimerStartDate else { invalidateTimer(); return }
-
+    onTouchesEnded?(self)
+    
     // Check if user just tapped instead of auto stepping.
     if Date().timeIntervalSince(startDate) < autoStepAfterInterval {
       switch stepperState {
