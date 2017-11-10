@@ -47,23 +47,23 @@ private enum TempoStepperState {
   /// On/off auto stepping feature. Defaults true.
   @IBInspectable public var shouldAutoStep: Bool = true
   /// Set true, if you want to show `value` without decimals. Defaults true.
-  @IBInspectable public var showIntValue: Bool = true
+  @IBInspectable public var showIntValue: Bool = true { didSet{ setNeedsLayout() }}
   /// Text color that shows stepper's `value`. Defaults black.
-  @IBInspectable public var valueTextColor: UIColor = .black
+  @IBInspectable public var valueTextColor: UIColor = .black { didSet{ setNeedsLayout() }}
   /// Font that shows stepper's `value`. Defaults body system font.
-  @IBInspectable public var valueFont: UIFont = .preferredFont(forTextStyle: .body)
+  @IBInspectable public var valueFont: UIFont = .preferredFont(forTextStyle: .body) { didSet{ setNeedsLayout() }}
   /// Text color of stepper's increase/decrease buttons. Defaults black.
-  @IBInspectable public var stepperButtonTextColor: UIColor = .black
+  @IBInspectable public var stepperButtonTextColor: UIColor = .black { didSet{ setNeedsLayout() }}
   /// Font of stepper's increase/decrease buttons. Defaults body system font.
-  @IBInspectable public var stepperButtonFont: UIFont = .preferredFont(forTextStyle: .body)
+  @IBInspectable public var stepperButtonFont: UIFont = .preferredFont(forTextStyle: .body) { didSet{ setNeedsLayout() }}
   /// Increase button text. Defaults "+".
-  @IBInspectable public var increaseButtonText: String = "+"
+  @IBInspectable public var increaseButtonText: String? { didSet{ setNeedsLayout() }}
   /// Decrease button text. Defaults "-".
-  @IBInspectable public var decreaseButtonText: String = "-"
+  @IBInspectable public var decreaseButtonText: String? { didSet{ setNeedsLayout() }}
   /// Optional increase button text. Defaults nil.
-  @IBInspectable public var increaseButtonImage: UIImage?
+  @IBInspectable public var increaseButtonImage: UIImage? { didSet{ setNeedsLayout() }}
   /// Optional decrease button text. Defaults nil.
-  @IBInspectable public var decreaseButtonImage: UIImage?
+  @IBInspectable public var decreaseButtonImage: UIImage? { didSet{ setNeedsLayout() }}
 
   /// Current state of stepper.
   private var stepperState: TempoStepperState = .normal
@@ -108,6 +108,7 @@ private enum TempoStepperState {
     valueTextField.borderStyle = .none
     valueTextField.delegate = self
     valueTextField.translatesAutoresizingMaskIntoConstraints = false
+    valueTextField.textAlignment = .center
     valueTextField.fillVertical(to: stepperContainerStackView)
     // Buttons Container
     stepperContainerStackView.addArrangedSubview(stepperButtonsStackView)
@@ -141,11 +142,15 @@ private enum TempoStepperState {
     increaseButton.setTitleColor(stepperButtonTextColor, for: .normal)
     increaseButton.setImage(increaseButtonImage, for: .normal)
     increaseButton.titleLabel?.font = stepperButtonFont
+    increaseButton.tintColor = tintColor
+    increaseButton.imageView?.contentMode = .scaleAspectFit
     // Decrease button
     decreaseButton.setTitle(decreaseButtonText, for: .normal)
     decreaseButton.setTitleColor(stepperButtonTextColor, for: .normal)
     decreaseButton.setImage(decreaseButtonImage, for: .normal)
     decreaseButton.titleLabel?.font = stepperButtonFont
+    decreaseButton.tintColor = tintColor
+    decreaseButton.imageView?.contentMode = .scaleAspectFit
   }
 
   // MARK: Stepping
