@@ -1,7 +1,7 @@
 TempoStepper
 ===
 
-Fully customisable stepper that displays increase/decrease buttons on its left side, vertically, lets you auto step if you hold them as well as lets you write the value with keyboard if you tap to its value field.
+Fully customizable stepper that displays increase/decrease buttons on its left side, vertically, lets you auto step if you hold them as well as lets you write the value with keyboard if you tap to its value field.
 
 Demo
 ----
@@ -24,11 +24,11 @@ pod 'TempoStepper'
 Usage
 ----
 
-`TempoStepper` is an `@IBDesignable` control, so you can design it directly from storyboard or of course you can initilize it with traditional ways by programmatically.
+`TempoStepper` is an `@IBDesignable` control, so you can design it directly from storyboard or of course you can initialize it with traditional ways by programmatically.
   
 Since it's a `UIControl` subclass, you just need to subscribe its `.valueChanged` event by `addTarget` function of `UIControl`. You can define an `@IBAction` function for that as well, if you want to link it from your storyboard.
   
-It is highly customisable. You can either tweak its `@IBInspectable` properties in storyboard or change them from your code.
+It is highly customizable. You can either tweak its `@IBInspectable` properties in storyboard or change them from your code.
 
 You can turn off tap to change and auto stepping features with `shouldTapToChange` and `shouldAutoStep` properties.
 
