@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "TempoStepper"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Fully customisable stepper with auto stepping."
 
   # This description is used to generate tags and improve search results.
@@ -167,6 +167,5 @@ Also, you can edit the auto stepping speeds, min/max values of stepper and displ
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "ALKit"
 
 end

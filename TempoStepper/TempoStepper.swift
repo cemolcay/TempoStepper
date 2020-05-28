@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ALKit
 
 /// Holds `TempoStepper`'s stepping state.
 public enum TempoStepperState {
@@ -20,7 +19,7 @@ public enum TempoStepperState {
 }
 
 /// Custom stepper with auto stepping.
-@IBDesignable public class TempoStepper: UIControl, UITextFieldDelegate {
+@IBDesignable open class TempoStepper: UIControl, UITextFieldDelegate {
   /// Current value of stepper. Defaults 0.
   @IBInspectable public var value: Double = 0 {
     didSet {
@@ -108,34 +107,35 @@ public enum TempoStepperState {
     // Container
     stepperContainerStackView.axis = .horizontal
     stepperContainerStackView.alignment = .center
+    stepperContainerStackView.distribution = .fill
     stepperContainerStackView.spacing = 0
     addSubview(stepperContainerStackView)
     stepperContainerStackView.translatesAutoresizingMaskIntoConstraints = false
-    stepperContainerStackView.fill(to: self)
+    stepperContainerStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+    stepperContainerStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+    stepperContainerStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+    stepperContainerStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     // Text field
     stepperContainerStackView.addArrangedSubview(valueTextField)
+    valueTextField.translatesAutoresizingMaskIntoConstraints = false
     valueTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    valueTextField.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     valueTextField.borderStyle = .none
     valueTextField.delegate = self
-    valueTextField.translatesAutoresizingMaskIntoConstraints = false
-    valueTextField.textAlignment = .center
-    valueTextField.fillVertical(to: stepperContainerStackView)
+    valueTextField.textAlignment = .left
     // Buttons Container
     stepperContainerStackView.addArrangedSubview(stepperButtonsStackView)
+    stepperButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
     stepperButtonsStackView.distribution = .fillEqually
-    stepperButtonsStackView.alignment = .center
     stepperButtonsStackView.axis = .vertical
     stepperButtonsStackView.spacing = 0
-    stepperButtonsStackView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     stepperButtonsStackView.addArrangedSubview(increaseButton)
     stepperButtonsStackView.addArrangedSubview(decreaseButton)
     // Increase button
     increaseButton.translatesAutoresizingMaskIntoConstraints = false
-    increaseButton.fillHorizontal(to: stepperButtonsStackView)
     increaseButton.isUserInteractionEnabled = false
     // Decrease button
     decreaseButton.translatesAutoresizingMaskIntoConstraints = false
-    decreaseButton.fillHorizontal(to: stepperButtonsStackView)
     decreaseButton.isUserInteractionEnabled = false
   }
 
